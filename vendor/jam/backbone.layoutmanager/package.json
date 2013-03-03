@@ -2,7 +2,7 @@
   "author": "Tim Branyen (@tbranyen)",
   "name": "backbone.layoutmanager",
   "description": "A manager for templates & layouts in Backbone.js",
-  "version": "0.8.3",
+  "version": "0.8.4",
   "homepage": "http://tbranyen.github.com/backbone.layoutmanager/",
   "repository": {
     "type": "git",
@@ -15,7 +15,7 @@
   "dependencies": {
     "backbone": "~0.9",
     "underscore.deferred": "~0.4",
-    "cheerio": "~0.10",
+    "cheerio": "~0.10.7",
     "underscore": "~1.4"
   },
   "devDependencies": {

@@ -21,7 +21,7 @@ var jam = {
             "main": "underscore.js"
         }
     ],
-    "version": "0.2.13",
+    "version": "0.2.15",
     "shim": {
         "backbone": {
             "deps": [
