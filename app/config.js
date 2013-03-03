@@ -20,4 +20,4 @@ requirejs.config({
 
 // Ensure the Jam configuration is loaded before configuring and loading the
 // rest of the application.
-define(["../vendor/jam/require.config"], function() {});
+define([":./vendor/jam/require.config"], function() {});

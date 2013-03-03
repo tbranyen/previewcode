@@ -17,6 +17,10 @@ define(function(require, Drop) {
       return false;
     },
 
+    afterRender: function() {
+      this.delegateEvents();
+    },
+
     handleDrop: function(ev) {
       var files = [];
       var fileList = _.toArray(ev.originalEvent.dataTransfer.files);
