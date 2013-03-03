@@ -47,9 +47,17 @@ module.exports = function(grunt) {
       debug: {
         // Merge the Jam configuration options into the output build.
         options: {
-          // Optionally allow CommonJS modules to be automatically wrapped to
-          // AMD.
-          cjsTranslate: true
+          // Include the main configuration file.
+          mainConfigFile: "app/config.js",
+
+          // Output file.
+          out: "dist/debug/source.js",
+
+          // Root application module.
+          name: "config",
+
+          // Do not wrap everything in an IIFE.
+          wrap: false
         }
       }
     },
@@ -123,6 +131,12 @@ module.exports = function(grunt) {
       },
 
       release: {
+        pushState: false,
+
+        server: function() {
+          return require("./server");
+        },
+
         map: {
           "debug/source.js": "dist/release/debug/source.js",
           "source.js": "dist/release/source.js",
@@ -162,10 +176,10 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks("grunt-contrib-mincss");
   grunt.loadNpmTasks("grunt-contrib-clean");
   grunt.loadNpmTasks("grunt-contrib-copy");
-  grunt.loadNpmTasks("grunt-contrib-requirejs");
 
   // Grunt BBB tasks.
   grunt.loadNpmTasks("grunt-bbb-server");
+  grunt.loadNpmTasks("grunt-bbb-requirejs");
   //grunt.loadNpmTasks("grunt-bbb-styles");
 
   // This will reset the build, be the precursor to the production

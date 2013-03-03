@@ -15,42 +15,42 @@ define(function(require) {
       "display/:id": "display"
     },
     
-    useLayout: function(name, options) {
-      if (this._layout) {
-        // Clear out the children.
-        this._layout.removeView();
+    setPage: function(name, options) {
+      // If an existing page exists, clear out the children.
+      if (this.page) {
+        this.page.view.removeView();
       }
 
-      // Save this layout.
-      this._layout = new Backbone.Layout(_.extend({
+      // Save this page layout.
+      this.page = new Backbone.Layout(_.extend({
         el: "main", template: name
-      }, options));
+      }, options)).render();
 
       // Swap out the layout data-attr.  Need to use `attr` here, because data
       // will only set in memory which means it wouldn't be set on the element
       // on the server.
-      this._layout.$el.attr("data-layout", name);
+      this.page.view.$el.attr("data-layout", name);
 
-      return this._layout;
+      return this.page.view;
     },
 
     drop: function() {
-      this.layout = this.useLayout("drop", {
+      this.setPage("drop", {
         views: {
           nav: new Layout.Navigation(),
           section: new Drop.Zone()
         }
-      }).render();
+      });
     },
 
     display: function(id, lol) {
-      this.layout = this.useLayout("display", {
+      this.setPage("display", {
         views: {
           nav: new Layout.Navigation(),
           aside: new Display.List(),
           section: new Display.File()
         }
-      }).render();
+      });
     }
   });
 

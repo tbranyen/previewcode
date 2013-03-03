@@ -57,7 +57,7 @@ require(["config"], function() {
       router[name].apply(router, _.values(req.params));
 
       // Once the layout has finished rendering, display.
-      router.layout.then(function() {
+      router.page.then(function() {
         res.send(Backbone.$.root().html());
       });
     });
