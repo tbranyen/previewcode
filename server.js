@@ -43,8 +43,8 @@ require(["config"], function() {
   // Setup the application.
   var app = require("app");
 
-  // Emulate jQuery `on` for Backbone history management.
-  cheerio.prototype.on = function() { return this; };
+  // Emulate jQuery `hide` and `on`.
+  cheerio.prototype.hide = cheerio.prototype.on = function() { return this; };
 
   // Load external dependencies.
   var LayoutManager = require("backbone.layoutmanager");
