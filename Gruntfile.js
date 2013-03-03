@@ -50,6 +50,8 @@ module.exports = function(grunt) {
           // Include the main configuration file.
           mainConfigFile: "app/config.js",
 
+          deps: ["browser", "main"],
+
           // Output file.
           out: "dist/debug/source.js",
 
