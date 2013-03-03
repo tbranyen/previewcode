@@ -9,6 +9,10 @@ define(function(require, Display) {
     urlRoot: "/api/files"
   });
 
+  Display.RecentList = Backbone.View.extend({
+
+  });
+
   Display.List = Backbone.View.extend({
     template: "display/list",
 

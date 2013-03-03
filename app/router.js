@@ -62,6 +62,10 @@ define(function(require) {
 
     initialize: function() {
       app.files = new Display.Model();
+
+      this.on("route", function() {
+        // Don't remember why I need this.
+      });
     }
   });
 
