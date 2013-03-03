@@ -1,7 +1,6 @@
 {
   "name": "backbone-boilerplate",
   "version": "0.1.0",
-
   "dependencies": {
     "grunt": "~0.4",
     "grunt-contrib-jshint": "0.1.1rc6",
@@ -12,13 +11,13 @@
     "grunt-contrib-clean": "0.4.0rc6",
     "grunt-contrib-concat": "0.1.2rc6",
     "grunt-contrib-requirejs": "0.4.0rc7",
-    "grunt-bbb-server": "0.1.0-alpha"
+    "grunt-bbb-server": "0.1.0-alpha",
+    "redis": "~0.8.2",
+    "uuid": "~1.4.0"
   },
-
   "jam": {
     "packageDir": "./vendor/jam",
     "baseUrl": "./app",
-
     "dependencies": {
       "backbone": "*",
       "jquery": "*",

@@ -8,6 +8,12 @@ var requirejs = require("requirejs");
 // Create a new server.
 var server = express();
 
+// Reusable API.
+var api = require("./api");
+
+// Attach the API.
+server.use("/api", api);
+
 // Assign requirejs to require so that existing code using `require` will not
 // need to be modified to use `requirejs` instead.
 require = requirejs;
@@ -69,6 +75,17 @@ require(["config"], function() {
 
   // Once Backbone has been patched, it's now safe to load the application.
   require(["main"], function() {
+    var Display = require("modules/display");
+
+    // Update the Display Model sync.
+    Display.Model.prototype.sync = function(method, model, options) {
+      if (method === "read") {
+        api.getFileById(model.id, function(results) {
+          model.set(results);
+        });
+      }
+    };
+
     // Configure LayoutManager to append ".html".
     LayoutManager.configure({
       fetch: function(path) {

@@ -12,7 +12,8 @@ define(function(require) {
   return Backbone.Router.extend({
     routes: {
       "": "drop",
-      "display/:id": "display"
+      "display/:id": "display",
+      "display/:id/:idx": "display"
     },
     
     setPage: function(name, options) {
@@ -43,14 +44,24 @@ define(function(require) {
       });
     },
 
-    display: function(id, lol) {
+    display: function(id, idx) {
+      app.files.set("id", id);
+      app.files.fetch();
+
       this.setPage("display", {
         views: {
           nav: new Layout.Navigation(),
-          aside: new Display.List(),
-          section: new Display.File()
+          aside: new Display.List({ files: app.files }),
+          section: new Display.File({ idx: idx || 0, files: app.files })
         }
+      }).on("showFile", function(idx) {
+        this.getView("section").contents = app.files.get("files")[idx].contents;
+        this.getView("section").render();
       });
+    },
+
+    initialize: function() {
+      app.files = new Display.Model();
     }
   });
 
