@@ -29,8 +29,8 @@ npm install
 # elevated permissions to install globally.
 npm install grunt-cli -g
 
-# Run the server.
-grunt server
+# Spawn redis-server and start the server.
+grunt redis server
 ```
 
 ## Build process ##

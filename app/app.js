@@ -1,5 +1,4 @@
 define(function(require, exports, module) {
-  console.log("hit");
 
   var _ = require("underscore");
   var $ = require("jquery");
