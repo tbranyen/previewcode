@@ -1,6 +1,10 @@
 define(function(require, Drop) {
   
-  var app = require("app");
+  // External libraries.
+  var Backbone = require("backbone");
+  var _ = require("underscore");
+
+  // Modules.
   var Display = require("modules/display");
 
   Drop.Zone = Backbone.View.extend({

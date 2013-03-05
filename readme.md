@@ -3,29 +3,59 @@ Preview Code
 
 [http://www.previewcode.com/](http://www.previewcode.com/)
 
-An example application that connects to the GitHub REST API and displays
-users from organizations.  Users can then be clicked to retrieve their
-repositories.  Finally, a repository can be clicked and recent commits
-displayed.
+An example application that runs both on the client-side and server-side using
+the same code base.  All Models, Collections, Views, and Routers are evaluated
+in Node.js and the browser to render the same content.  Some functionality and
+styles may not be available due to limits of third-party libraries.
 
-![](https://raw.github.com/tbranyen/previewcode.com/master/screenshot.jpg)
+![](screenshot.jpg)
 
 ## Running locally ##
 
 To run locally you will need to install [Node.js](http://nodejs.org) and
-[grunt-bbb](http://github.com/backbone-boilerplate/grunt-bbb).  Once the
-dependencies are installed, simply clone the repository and run the server.
+[Redis](http://redis.org).
 
 ``` bash
 # Clone the repository.
-git clone git://github.com/tbranyen/previewcode.com.git
+git clone git://github.com/tbranyen/previewcode.git
 
 # Change directory into it.
-cd github-viewer
+cd previewcode
+
+# Install the dependencies from NPM.
+npm install
+
+# (Optionally) Install `grunt-cli` if you haven't already.  This may require
+# elevated permissions to install globally.
+npm install grunt-cli -g
 
 # Run the server.
-bbb server
+grunt server
 ```
+
+## Build process ##
+
+Building will copy all assets and optimize all JavaScript and CSS into the
+local `dist` directory.
+
+The tasks that run will lint, precompile, trace dependencies, concatenate, and
+minify all styles and scripts.
+
+### Debug ###
+
+Builds out optimized, but unminified, files into the `dist/debug` directory.
+
+This is a slightly deprecated mode, since source maps are now baked into the
+project.  It will do everything up to minification to easily trace bugs.
+
+Run this task with `grunt debug`.
+
+### Release ###
+
+Builds out optimized files from the `dist/debug` directory into the
+`dist/release` directory.
+
+Run this task with `grunt release`.
 
 ## Stack ##
 
@@ -41,10 +71,6 @@ The foundation of the entire application structure and the deployment assets.
 Along with [grunt-bbb](https://github.com/backbone-boilerplate/grunt-bbb) the
 application can be tested locally and built for production with the same tool.
 
-Some custom tweaks needed to be added for this to work:
-
-* `production-fixes.css` file to map the Twitter Bootstrap images correctly.
-
 ### Backbone LayoutManager ###
 
 [backbone.layoutmanager](https://github.com/tbranyen/backbone.layoutmanager)
@@ -52,42 +78,6 @@ Some custom tweaks needed to be added for this to work:
 Used for the general layout and View arrangement.  Is also used to facilitate
 re-rendering and collection lists.  One single layout is created throughout
 the lifespan of the application and instead the individual regions are updated.
-
-### Backbone CollectionCache ###
-
-[backbone.collectioncache.js](https://gist.github.com/2866702)
-
-This is a *work-in-progress* Backbone plugin to provide a better caching
-mechanism for Collections.  It's used within this application to provide
-client-side caching in both sessionStorage (persist refresh) and inside memory
-for faster lookups.
-
-### Twitter Bootstrap ###
-
-[bootstrap](https://github.com/twitter/bootstrap/)
-
-Made the design look significantly better than the original.  Responsible for
-the entire UI layer.
-
-## Deployment ##
-
-This is deployed on a Linode Arch Linux server that runs Nginx.  It is served
-locally and updated via a `git pull` and `bbb release` combination.
-
-The configuration looks like:
-
-``` nginx
-server {
-  listen 80;
-  server_name githubviewer.org;
-
-  location / {
-    root /github-viewer/dist/release;
-
-    try_files $uri /index.html;
-  }
-}
-```
 
 ## Credits ##
 

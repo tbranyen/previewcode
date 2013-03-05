@@ -1,5 +1,6 @@
-// This is the build configuration file.  It is a Grunt file, which you can 
-// read more about here: https://github.com/gruntjs/grunt/wiki/Configuring-tasks
+// This is the build configuration file.  It is a Grunt file, which you can
+// read more about here:
+// https://github.com/gruntjs/grunt/wiki/Configuring-tasks
 module.exports = function(grunt) {
 
   grunt.initConfig({
@@ -26,15 +27,12 @@ module.exports = function(grunt) {
     styles: {
       // Out the concatenated contents of the following styles into the below
       // development file path.
-      "dist/debug/index.css": {
+      "dist/debug/styles.css": {
         // Point this to where your `index.css` file is location.
         src: "app/styles/index.css",
 
         // The relative path to use for the @imports.
         paths: ["app/styles"],
-
-        // Point to where styles live.
-        prefix: "app/styles/",
 
         // Additional production-only stylesheets here.
         additional: []
@@ -50,13 +48,14 @@ module.exports = function(grunt) {
           // Include the main configuration file.
           mainConfigFile: "app/config.js",
 
-          deps: ["browser", "main"],
-
           // Output file.
           out: "dist/debug/source.js",
 
           // Root application module.
           name: "config",
+
+          // Include the application dependency.
+          deps: ["app"],
 
           // Do not wrap everything in an IIFE.
           wrap: false
@@ -117,7 +116,7 @@ module.exports = function(grunt) {
       pushState: false,
 
       server: function() {
-        return require("./server");
+        return require("./lib/server");
       },
 
       map: {
@@ -126,6 +125,9 @@ module.exports = function(grunt) {
       },
 
       debug: {
+        pushState: "<%= server.pushState %>",
+        server: "<%= server.server %>",
+
         map: {
           "source.js": "dist/debug/source.js",
           "styles.css": "dist/debug/styles.css"
@@ -133,11 +135,8 @@ module.exports = function(grunt) {
       },
 
       release: {
-        pushState: false,
-
-        server: function() {
-          return require("./server");
-        },
+        pushState: "<%= server.pushState %>",
+        server: "<%= server.server %>",
 
         map: {
           "debug/source.js": "dist/release/debug/source.js",
@@ -170,6 +169,14 @@ module.exports = function(grunt) {
 
   });
 
+  // Runs the local redis server.
+  grunt.registerTask("redis", "Run the redis daemon.", function() {
+    grunt.util.spawn({
+      cmd: "redis-server",
+      args: ["/usr/local/etc/redis.conf"]
+    }, function() {});
+  });
+
   // Grunt contribution tasks.
   grunt.loadNpmTasks("grunt-contrib-jshint");
   grunt.loadNpmTasks("grunt-contrib-jst");
@@ -182,12 +189,12 @@ module.exports = function(grunt) {
   // Grunt BBB tasks.
   grunt.loadNpmTasks("grunt-bbb-server");
   grunt.loadNpmTasks("grunt-bbb-requirejs");
-  //grunt.loadNpmTasks("grunt-bbb-styles");
+  grunt.loadNpmTasks("grunt-bbb-styles");
 
   // This will reset the build, be the precursor to the production
   // optimizations, and serve as a good intermediary for debugging.
   grunt.registerTask("debug", [
-    "clean", "jshint", "jst", "requirejs", "concat", "copy" //"styles"
+    "clean", "jshint", "jst", "requirejs", "concat", "copy", "styles"
   ]);
 
   // The release task will first run the debug tasks.  Following that, minify
@@ -196,5 +203,5 @@ module.exports = function(grunt) {
 
   // When running the default Grunt command, just lint the code.
   grunt.registerTask("default", ["jshint"]);
-};
 
+};

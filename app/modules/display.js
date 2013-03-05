@@ -1,6 +1,8 @@
 define(function(require, Display) {
   
-  var app = require("app");
+  // External libraries.
+  var Backbone = require("backbone");
+  var _ = require("underscore");
 
   // Include the syntax highlighting library.
   var Prism = require("vendor/js/prism");
