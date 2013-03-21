@@ -14,7 +14,13 @@
     "grunt-bbb-requirejs": "~0.1.0-alpha.1",
     "redis": "~0.8.2",
     "uuid": "~1.4.0",
-    "grunt-bbb-styles": "0.1.0-alpha.1"
+    "grunt-bbb-styles": "0.1.0-alpha.1",
+    "express": "~3.1.0",
+    "cheerio": "~0.10.8",
+    "backbone": "~1.0.0",
+    "requirejs": "~2.1.5",
+    "backbone.layoutmanager": "~0.8.6",
+    "underscore": "~1.4.4"
   },
   "jam": {
     "packageDir": "./vendor/jam",
