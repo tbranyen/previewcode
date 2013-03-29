@@ -1,4 +1,7 @@
 define(function(require, Drop) {
+
+  // Application.
+  var app = require("app");
   
   // External libraries.
   var Backbone = require("backbone");
@@ -37,7 +40,7 @@ define(function(require, Drop) {
 
         // Save the model and then redirect to the display page.
         app.files.save().then(function() {
-          app.router.navigate("display/" + app.files.id, true);
+          require("app").router.navigate("display/" + app.files.id, true);
         });
       });
 

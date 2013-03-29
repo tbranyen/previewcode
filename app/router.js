@@ -48,13 +48,15 @@ define(function(require) {
       app.files.set("id", id);
       app.files.fetch();
 
-      this.setPage("display", {
+      var page = this.setPage("display", {
         views: {
           nav: new Layout.Navigation(),
           aside: new Display.List({ files: app.files }),
           section: new Display.File({ idx: idx || 0, files: app.files })
         }
-      }).on("showFile", function(idx) {
+      });
+      
+      page.on("showFile", function(idx) {
         this.getView("section").contents = app.files.get("files")[idx].contents;
         this.getView("section").render();
       });
@@ -62,10 +64,6 @@ define(function(require) {
 
     initialize: function() {
       app.files = new Display.Model();
-
-      this.on("route", function() {
-        // Don't remember why I need this.
-      });
     }
   });
 

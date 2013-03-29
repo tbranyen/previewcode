@@ -113,11 +113,11 @@ module.exports = function(grunt) {
     clean: ["dist/"],
 
     server: {
-      pushState: false,
+      //pushState: false,
 
-      server: function() {
-        return require("./lib/server");
-      },
+      //server: function() {
+      //  return require("./app/config/node");
+      //},
 
       map: {
         "source.js": "vendor/js/require.js",
