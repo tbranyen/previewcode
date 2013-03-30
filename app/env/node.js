@@ -11,6 +11,14 @@ define(function() {
 
     prefix: "app/templates/",
 
+    render: function(template, context) {
+      // Add the render attribute.
+      this.view.$el.attr("data-render", "true");
+
+      // Render the same.
+      return template(context);
+    },
+
     fetch: function(path) {
       path += ".html";
       var done = this.async();

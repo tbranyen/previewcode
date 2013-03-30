@@ -10,7 +10,12 @@ define(function(require) {
 
     // Detect if the View was rendered on the server.
     render: function(template, context) {
-      console.log(this);
+      // If rendered on the server, do not re-render.
+      if (this.view.$el.data("render")) {
+        this.view.$el.data("render", false);
+        return;
+      }
+
       return template(context);
     },
 
