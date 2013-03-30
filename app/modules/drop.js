@@ -40,7 +40,7 @@ define(function(require, Drop) {
 
         // Save the model and then redirect to the display page.
         app.files.save().then(function() {
-          require("app").router.navigate("display/" + app.files.id, true);
+          Backbone.history.navigate("display/" + app.files.id, true);
         });
       });
 

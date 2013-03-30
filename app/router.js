@@ -51,7 +51,7 @@ define(function(require) {
       var page = this.setPage("display", {
         views: {
           nav: new Layout.Navigation(),
-          aside: new Display.List({ files: app.files }),
+          aside: new Display.List({ id: id, files: app.files }),
           section: new Display.File({ idx: idx || 0, files: app.files })
         }
       });

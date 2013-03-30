@@ -6,8 +6,7 @@ define(function(require, exports, module) {
   var Router = require("router");
   var LayoutManager = require("backbone.layoutmanager");
   
-  require("feature!environment");
-
+  // The application object is just a LayoutManager View.
   var app = new Backbone.Layout({
     el: "body",
 
@@ -16,8 +15,9 @@ define(function(require, exports, module) {
     },
 
     hijackLinks: function(ev) {
+      var target = ev.currentTarget;
       // Get the absolute anchor href.
-      var href = { prop: $(this).prop("href"), attr: $(this).attr("href") };
+      var href = { prop: $(target).prop("href"), attr: $(target).attr("href") };
       // Get the absolute root.
       var root = location.protocol + "//" + location.host + app.root;
 
@@ -25,7 +25,7 @@ define(function(require, exports, module) {
       if (href.prop.slice(0, root.length) === root) {
         // Stop the default event to ensure the link will not cause a page
         // refresh.
-        evt.preventDefault();
+        ev.preventDefault();
 
         // `Backbone.history.navigate` is sufficient for all Routers and will
         // trigger the correct events. The Router's internal `navigate` method
@@ -37,14 +37,6 @@ define(function(require, exports, module) {
 
   // The root path to run the application through.
   app.root = "/";
-
-  // Define your master router on the application namespace and trigger all
-  // navigation from this instance.
-  app.router = new Router();
-
-  // Trigger the initial route and enable HTML5 History API support, set
-  // the root folder to '/' by default.  Change in app.js.
-  Backbone.history.start({ pushState: true, root: app.root });
 
   // Expose this object for other modules if they need it.
   module.exports = app;

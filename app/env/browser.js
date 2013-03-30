@@ -1,7 +1,5 @@
-define(function() {
+define(function(require) {
   
-  var Backbone = require("backbone");
-
   // Configure LayoutManager with browser defaults.
   require("backbone.layoutmanager").configure({
     // Allow LayoutManager to augment Backbone.View.prototype.
@@ -23,8 +21,6 @@ define(function() {
 
       // Put fetch into `async-mode`.
       var done = this.async();
-
-  console.log(Backbone.history.root);
 
       // Seek out the template asynchronously.
       $.get(require("app").root + path, function(contents) {

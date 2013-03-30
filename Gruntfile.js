@@ -57,6 +57,12 @@ module.exports = function(grunt) {
           // Include the application dependency.
           deps: ["app"],
 
+          // Include main, so that it can be required.
+          include: ["main", "env/browser"],
+
+          // Ensure the browser configuration is loaded.
+          insertRequire: ["env/browser"],
+
           // Do not wrap everything in an IIFE.
           wrap: false
         }
@@ -113,15 +119,14 @@ module.exports = function(grunt) {
     clean: ["dist/"],
 
     server: {
-      //pushState: false,
+      pushState: false,
 
-      //server: function() {
-      //  return require("./app/config/node");
-      //},
+      server: function() {
+        return require("./lib/server");
+      },
 
       map: {
-        "source.js": "vendor/js/require.js",
-        "styles.css": "app/styles/index.css"
+        "source.js": "vendor/js/require.js"
       },
 
       debug: {
@@ -130,7 +135,7 @@ module.exports = function(grunt) {
 
         map: {
           "source.js": "dist/debug/source.js",
-          "styles.css": "dist/debug/styles.css"
+          "app/styles/index.css": "dist/debug/styles.css"
         }
       },
 
@@ -141,7 +146,7 @@ module.exports = function(grunt) {
         map: {
           "debug/source.js": "dist/release/debug/source.js",
           "source.js": "dist/release/source.js",
-          "styles.css": "dist/release/styles.css",
+          "app/styles/index.css": "dist/release/styles.css",
 
           // For debugging.
           "source.js.map": "dist/release/source.js.map"

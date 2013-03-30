@@ -4,8 +4,9 @@ require.config({
   // Make vendor easier to type.
   paths: {
     "vendor": "../vendor",
+
+    // This plugin is used to conditionally load features.
     "feature": "../vendor/js/feature"
-    //"feature": "../vendor/jam/feature/feature"
   },
 
   shim: {
@@ -20,15 +21,21 @@ require.config({
   },
 
   feature: {
-    // Custom environment overrides.
-    environment: {
-      // Only load for browser environments.
-      "environment/browser": function() {
-        return typeof this.window === "object";
+    env: {
+      "env/browser": function() {
+        return typeof window === "object";
+      },
+
+      "env/node": function() {
+        return typeof process === "object" && process.title === "node";
       }
     }
   },
 
-  // Include the main application entry point.
   deps: ["app"]
+});
+
+// Wait for the environment to be set up before running the application.
+require(["feature!env"], function(env) {
+  require(["main"]);
 });

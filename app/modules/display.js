@@ -1,5 +1,5 @@
 define(function(require, Display) {
-  
+
   // External libraries.
   var Backbone = require("backbone");
   var _ = require("underscore");
@@ -25,13 +25,8 @@ define(function(require, Display) {
     },
 
     showFile: function(ev) {
-      ev.preventDefault();
-      ev.stopPropagation();
-
       var target = this.$(ev.currentTarget).data("idx");
       this.trigger("showFile", target);
-
-      app.router.navigate("display/" + app.files.id + "/" + target);
     },
 
     initialize: function() {

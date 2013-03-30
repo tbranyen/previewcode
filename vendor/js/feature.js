@@ -18,7 +18,12 @@ define({
       config = require.rawConfig;
     }
 
-    var feature = config.feature && config.feature[name];
+    if (!config.feature) {
+      return;
+    }
+
+    // Detect the specific feature.
+    var feature = config.feature[name];
 
     // No feature to load, throw.
     if (!feature) {
@@ -39,19 +44,18 @@ define({
       // Get the callback to test.
       var callback = feature[name];
 
+      // In a build context, do not load any features.
+      if (config.isBuild) {
+        load();
+
+        continue;
+      }
+
       // Test the callback, use the first one to pass.  If a callback was not
       // provided, try testing for truthiness of the value.
       if (typeof callback === "function" ? callback.call(global) : callback) {
         // Bring in the correct module.
-        console.log(name);
-        req([name], function(module) {
-          // If doing a build don't care about loading
-          if (config.isBuild) { 
-            return load();
-          }
-
-          return load(module);
-        });
+        req([name], load);
 
         // End looping.
         break;
@@ -115,4 +119,4 @@ define({
   //}
 });
 
-})(this);
+})(typeof global === "object" ? global : this);
