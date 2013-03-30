@@ -8,6 +8,12 @@ define(function(require) {
     // Indicate where templates are stored.
     prefix: "app/templates/",
 
+    // Detect if the View was rendered on the server.
+    render: function(template, context) {
+      console.log(this);
+      return template(context);
+    },
+
     // This custom fetch method will load pre-compiled templates or fetch them
     // remotely with AJAX.
     fetch: function(path) {

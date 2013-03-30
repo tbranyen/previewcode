@@ -57,6 +57,18 @@ Builds out optimized files from the `dist/debug` directory into the
 
 Run this task with `grunt release`.
 
+### Running in production ###
+
+To run this project in production, you should probably not be using the Grunt
+server task.  Since this project is purely for research purposes we'll assume
+it's fine for your needs (no gzip, cluster support, etc).
+
+Run the following command to build and listen on port `80`.
+
+``` bash
+PORT=80 grunt release redis server:release
+```
+
 ## Stack ##
 
 This is an entirely client-side application, meaning aside from the configured

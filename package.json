@@ -13,6 +13,12 @@
     "grunt-bbb-server": "~0.1.0-alpha.5",
     "grunt-bbb-styles": "~0.1.0-alpha",
     "grunt-bbb-requirejs": "~0.1.0-alpha.1",
+    "underscore": "~1.4.4",
+    "express": "~3.1.0",
+    "cheerio": "~0.10.8",
+    "backbone": "~1.0.0",
+    "requirejs": "~2.1.5",
+    "backbone.layoutmanager": "0.8.7",
     "redis": "~0.8.2",
     "uuid": "~1.4.0"
   },
