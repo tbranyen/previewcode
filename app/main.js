@@ -6,6 +6,10 @@ define(function(require) {
   // Router.
   var Router = require("router");
 
+  // Ensure the environment is configured before loading the rest of the
+  // application.
+  require("feature!environment");
+
   // Define your master router on the application namespace and trigger all
   // navigation from this instance.
   app.router = new Router();

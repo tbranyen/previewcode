@@ -1,16 +1,20 @@
 define(function(require) {
   
+  var app = require("app");
+  var $ = require("jquery");
+
   // Configure LayoutManager with browser defaults.
   require("backbone.layoutmanager").configure({
-    // Allow LayoutManager to augment Backbone.View.prototype.
+    // Allow LayoutManager to augment `Backbone.View.prototype`.
     manage: true,
 
     // Indicate where templates are stored.
     prefix: "app/templates/",
 
     // Detect if the View was rendered on the server.
+    //
+    // TODO This will be possible with a future version of LayoutManager.
     render: function(template, context) {
-      console.log(this);
       return template(context);
     },
 
@@ -29,7 +33,7 @@ define(function(require) {
       var done = this.async();
 
       // Seek out the template asynchronously.
-      $.get(require("app").root + path, function(contents) {
+      $.get(app.root + path, function(contents) {
         done(_.template(contents));
       }, "text");
     }

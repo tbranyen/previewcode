@@ -51,17 +51,9 @@ module.exports = function(grunt) {
           // Output file.
           out: "dist/debug/source.js",
 
-          // Root application module.
-          name: "config",
-
-          // Include the application dependency.
-          deps: ["app"],
-
-          // Include main, so that it can be required.
-          include: ["main", "env/browser"],
-
-          // Ensure the browser configuration is loaded.
-          insertRequire: ["env/browser"],
+          // Only bundle the browser feature since that's all that will ever
+          // be loaded.
+          include: ["environments/browser"],
 
           // Do not wrap everything in an IIFE.
           wrap: false
