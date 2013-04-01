@@ -1,5 +1,5 @@
 define(function(require) {
-  
+
   var app = require("app");
   var $ = require("jquery");
 

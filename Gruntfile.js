@@ -55,6 +55,9 @@ module.exports = function(grunt) {
           // be loaded.
           include: ["environments/browser"],
 
+          // This will ensure the application runs after being built.
+          insertRequire: ["main"],
+
           // Do not wrap everything in an IIFE.
           wrap: false
         }

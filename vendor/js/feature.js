@@ -61,62 +61,60 @@ define({
         break;
       }
     }
-
-    //req(module.deps || [], function() {
-    //  var depArgs = arguments;
-    //  // Require this module
-    //  req([name], function() {
-    //    // Attach property
-    //    var attach = module.attach;
-
-    //    // If doing a build don't care about loading
-    //    if (config.isBuild) { 
-    //      return load();
-    //    }
-
-    //    // Return the correct attached object
-    //    if (typeof attach === "function") {
-    //      return load(attach.apply(global, depArgs));
-    //    }
-
-    //    // Use global for now (maybe this?)
-    //    return load(global[attach]);
-    //  });
-    //});
   },
 
   // Also invoked by the AMD builder, this writes out a compatible define
   // call that will work with loaders such as almond.js that cannot read
   // the configuration data.
-  //write: function(pluginName, moduleName, write) {
-  //  var module = buildMap[moduleName];
-  //  var deps = module.deps;
-  //  var normalize = { attach: null, deps: "" };
-	//
-  //  // Normalize the attach to global[name] or function() { }
-  //  if (typeof module.attach === "function") {
-  //    normalize.attach = module.attach.toString();
-  //  } else {
-  //    normalize.attach = [
-  //      "function() {",
-  //        "return typeof ", String(module.attach),
-  //          " !== \"undefined\" ? ", String(module.attach), " : void 0;",
-  //      "}"
-  //    ].join("");
-  //  }
+  write: function(pluginName, featureName, write) {
+    var feature = buildMap[featureName].feature;
 
-  //  // Normalize the dependencies to have proper string characters
-  //  if (deps.length) {
-  //    normalize.deps = "'" + deps.toString().split(",").join("','") + "'";
-  //  }
+    // Add the starting JSON bracket.
+    var features = ["{"];
 
-  //  // Write out the actual definition
-  //  write([
-  //    "define('", pluginName, "!", moduleName, "', ",
-  //      "[", normalize.deps, "], ", normalize.attach,
-  //    ");\n"
-  //  ].join(""));
-  //}
+    // Convert all test functions to strings.
+    for (var name in feature) {
+      // ensure we only iterate over object properties.
+      if (!feature.hasOwnProperty(name)) { continue; }
+
+      // Add this feature to the source.
+      features.push("'" + name + "': " + feature[name].toString() + ",");
+    }
+
+    // Remove the last comma.
+    features[features.length-1] = features[features.length-1].slice(0, -1);
+
+    // Add the last bracket.
+    features.push("}");
+
+    function findFeature() {
+      for (var name in feature) {
+        // Ensure we only iterate over object properties.
+        if (!feature.hasOwnProperty(name)) { continue; }
+
+        // Get the callback to test.
+        var callback = feature[name];
+
+        // Test the callback, use the first one to pass.  If a callback was not
+        // provided, try testing for truthiness of the value.
+        if (typeof callback === "function" ? callback.call(window) : callback) {
+          // Bring in the correct module.
+          return require(name);
+        }
+      }
+    }
+
+    // Write out the actual definition
+    write([
+      "define('", pluginName, "!", featureName, "', [], function() {",
+        // Set all the features.
+        "var feature = ", features.join(""), ";",
+
+        // Find the correct feature and auto-run it.
+        "return (", findFeature.toString(), ")", "();",
+      "});\n"
+    ].join(""));
+  }
 });
 
 })(typeof global === "object" ? global : this);
