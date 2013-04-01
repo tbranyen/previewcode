@@ -1,6 +1,6 @@
 <ul>
   <% _.each(options.files.get("files"), function(file, i) { %>
-    <a href="#display/<%= options.id %>/<%= i %>">
+    <a href="/display/<%= options.id %>/<%= i %>">
       <li data-idx="<%= i %>"><%= file.name %></li>
     </a>
   <% }); %>
