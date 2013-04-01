@@ -4,6 +4,8 @@ define(function(require, Display) {
   var Backbone = require("backbone");
   var _ = require("underscore");
 
+  require("backbone.layoutmanager");
+
   // Include the syntax highlighting library.
   var Prism = require("vendor/js/prism");
 
